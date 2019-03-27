@@ -14,10 +14,10 @@ namespace Bridge
         {
             var desc = !string.IsNullOrEmpty(descriptionInput.Text) ? descriptionInput.Text : "Description";
             var count = (countInput.Value > 0) ? countInput.Value : 1;
-            var games = GameProvider.createGames((uint) count);
             var output = FormatProvider.Start(desc);
-            foreach (var game in games)
+            for (uint i = 0; i < count; i++)
             {
+                var game = GameProvider.createGame(i);
                 output += FormatProvider.Format(game);
             }
             FileSystemProvider.Save(output);

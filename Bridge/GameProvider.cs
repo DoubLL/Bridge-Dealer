@@ -5,33 +5,29 @@ namespace Bridge
 {
     class GameProvider
     {
-        public static List<Game> createGames(uint count)
+        private static Random random = new Random();
+
+        public static Game createGame(uint i)
         {
-            var games = new List<Game>();
-            for (uint i = 0; i < count; i++)
+            var hands = createHands();
+            return new Game
             {
-                var hands = createHands();
-                games.Add(new Game
-                {
-                    number = i + 1,
-                    dealer = (Dealer) (i % 4),
-                    north = hands[0],
-                    east = hands[1],
-                    south = hands[2],
-                    west = hands[3],
-                });
-            }
-            return games;
+                number = i + 1,
+                dealer = (Dealer) (i % 4),
+                north = hands[0],
+                east = hands[1],
+                south = hands[2],
+                west = hands[3],
+            };
         }
 
         private static Hand[] createHands()
         {
             var hands = new Hand[4] { new Hand(), new Hand(), new Hand(), new Hand()};
             var deck = Card.getDeck();
-            var rnd = new Random();
             for (int i = 0; deck.Count > 0; i = (i + 1) % 4)
             {
-                var card = deck[rnd.Next(deck.Count)];
+                var card = deck[random.Next(deck.Count)];
                 hands[i].cards.Add(card);
                 deck.Remove(card);
             }
